@@ -1,3 +1,7 @@
+## Electron App
+
+Run 'npm run electron-build' and it will display a window the Angular app
+
 # CecyteaFrontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
