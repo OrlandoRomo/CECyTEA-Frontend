@@ -1,0 +1,59 @@
+<div class="uk-background-primary uk-light uk-padding uk-panel uk-margin-medium-bottom">
+    <p class="uk-h4 uk-text-center">Crear nuevo administrador</p>
+</div>
+<div>
+    <div class="uk-card uk-card-default uk-card-body
+        uk-flex uk-flex-center uk-margin-top-remove">
+        <form [formGroup]="managerForm" (ngSubmit)="createNewManager()" class="uk-margin-remove-top">
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: user"></span>
+                    <input formControlName="name" class="uk-input uk-form-small uk-form-width-large" type="text" placeholder="Nombre">
+                </div>
+                <div *ngIf="managerForm.get('name').errors?.required && managerForm.get('name').touched">
+                    <span class="uk-label uk-label-danger">El nombre es requerido</span>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: user"></span>
+                    <input formControlName="lastName" class="uk-input uk-form-small uk-form-width-large" type="text" placeholder="Apellidos">
+                </div>
+                <div *ngIf="managerForm.get('lastName').errors?.required && managerForm.get('lastName').touched">
+                    <span class="uk-label uk-label-danger">Los apellidos son requerido</span>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                    <input formControlName="email" class="uk-input uk-form-small uk-form-width-large" type="text" placeholder="Correo electrónico">
+                </div>
+                <div *ngIf="managerForm.get('email').errors?.pattern && managerForm.get('email').touched">
+                    <span class="uk-label uk-label-danger">Email no válido</span>
+                </div>
+                <div *ngIf="managerForm.get('email').errors?.required && managerForm.get('email').touched">
+                    <span class="uk-label uk-label-danger">Email es requerido</span>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                    <input formControlName="password" class="uk-input uk-form-small uk-form-width-large" type="password" placeholder="Contraseña">
+                </div>
+                <div *ngIf="managerForm.get('password').errors?.required && managerForm.get('password').touched">
+                    <span class="uk-label uk-label-danger">Contraseña es requerida</span>
+                </div>
+            </div>
+            <button [disabled]="!managerForm.valid" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Crear</button>
+            <a routerLink="/login" class="uk-link-muted uk-position-bottom-center uk-text-primary" href="">
+            Regresar al Login</a>
+        </form>
+    </div>
+    <div *ngIf="hasError" class="uk-alert-danger uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top" uk-alert>
+        <p>{{errMessage}}</p>
+    </div>
+    <div *ngIf="hasError" class="uk-alert-success uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top" uk-alert>
+        <p>Administrador Creado con éxito</p>
+    </div>
+</div>
+<app-footer></app-footer>

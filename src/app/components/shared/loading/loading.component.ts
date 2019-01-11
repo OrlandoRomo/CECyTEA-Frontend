@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-loading',
@@ -8,7 +9,10 @@ import { Component } from '@angular/core';
 export class LoadingComponent {
 
   public isLoading = true;
-  constructor() {
-    setTimeout(() => this.isLoading = false,2000);
+  constructor(private route: Router) {
+    setTimeout(() => {
+      this.isLoading = false;
+      this.route.navigate(['/login']);
+    }, 2000);
   }
 }

@@ -1,7 +1,7 @@
-<div *ngIf="isShowing" class="uk-background-primary uk-light uk-padding uk-panel uk-margin-medium-bottom">
+<div class="uk-background-primary uk-light uk-padding uk-panel uk-margin-medium-bottom">
     <p class="uk-h4 uk-text-center">Iniciar Sesión</p>
 </div>
-<div *ngIf="isShowing" class="uk-flex uk-flex-column uk-text-center">
+<div class="uk-flex uk-flex-column uk-text-center">
     <div class="uk-card uk-card-default uk-card-body uk-margin-remove-bottom">
         <span class="uk-position-center" uk-icon="icon: user; ratio: 4"></span>
     </div>
@@ -31,7 +31,7 @@
             </div>
             <button [disabled]="!loginForm.valid" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Iniciar
                     Sesión</button>
-            <a class="uk-link-muted uk-position-bottom-center" href="">¿Sin cuenta aún? Click aquí para
+            <a routerLink="/newmanager" class="uk-link-muted uk-position-bottom-center uk-text-primary" href="">¿Sin cuenta aún? Click aquí para
                     registrar</a>
         </form>
     </div>
@@ -39,3 +39,4 @@
         <p>{{errMessage}}</p>
     </div>
 </div>
+<app-footer></app-footer>

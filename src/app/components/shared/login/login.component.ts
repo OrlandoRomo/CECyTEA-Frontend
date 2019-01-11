@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Manager } from '../../../interfaces/manager';
+import { ManagerLogin } from '../../../interfaces/managerLogin';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +11,17 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent {
 
-  public isShowing = false;
   public loginForm: FormGroup;
-  public user: Manager;
+  public user: ManagerLogin;
   public hasError = false;
   public errMessage: String;
-  constructor(private _auth: AuthService) {
-    setTimeout(() => this.isShowing = true, 2000);
-    this.buildForm();
+  constructor(private _auth: AuthService, private router: Router) {
+    if (localStorage.getItem('manager') !== null) {
+      this.router.navigate(['/home']);
+    } else {
+      this.buildForm();
+    }
+
   }
 
   buildForm() {
@@ -31,8 +35,9 @@ export class LoginComponent {
   }
   checkManager() {
     this.user = this.loginForm.value;
-    this._auth.checkUser(this.user).subscribe((data) => {
-      console.log(data);
+    this._auth.checkUser(this.user).subscribe((manager: any) => {
+      localStorage.setItem('manager', JSON.stringify(manager));
+      this.router.navigate(['/home']);
     }, (err) => {
       this.hasError = true;
       this.errMessage = err.error.err['message'];
