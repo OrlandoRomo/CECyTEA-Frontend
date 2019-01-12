@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { GetTokenService } from './get-token.service';
 import { Question } from '../interfaces/question';
-
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,13 +11,13 @@ export class QuestionsService {
 
   constructor(private _http: HttpClient, private _getToken: GetTokenService) {
   }
-  getAllQuestions() {
+  getAllQuestions(): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'token': this._getToken.getTokenLocalStorage(),
       })
     };
-    return this._http.get('http://localhost:3000/questions', httpOptions);
+    return this._http.get('http://localhost:3000/questions', httpOptions).pipe(catchError(this.erroHandler));
   }
   deleteQuestionById(id: String) {
     const httpOptions = {
@@ -59,5 +60,13 @@ export class QuestionsService {
       xhr.setRequestHeader('token', token);
       xhr.send(formData);
     });
+  }
+  private erroHandler(err: HttpErrorResponse): Observable<any> {
+    // tslint:disable-next-line:prefer-const
+    let message: string;
+    if (err.status === 0) {
+      message = 'No se pudo conectar con el servidor, intelo más tarde.';
+    }
+    throw message;
   }
 }

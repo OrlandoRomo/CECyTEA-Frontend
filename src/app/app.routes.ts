@@ -7,6 +7,7 @@ import { ListUsersComponent } from './components/list-users/list-users.component
 import { ListCategoriesComponent } from './components/list-categories/list-categories.component';
 import { ComponentIndexComponent } from './components/component-index.component';
 import { QuestionComponent } from './components/question/question.component';
+import { CategoryComponent } from './components/category/category.component';
 
 const routes: Routes = [
     {
@@ -16,6 +17,7 @@ const routes: Routes = [
             { path: 'newquestion', component: QuestionComponent },
             { path: 'users', component: ListUsersComponent },
             { path: 'categories', component: ListCategoriesComponent },
+            { path: 'newcategory', component: CategoryComponent },
         ]
     },
     { path: 'home', component: HomeComponent },

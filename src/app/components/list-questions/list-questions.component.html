@@ -1,63 +1,85 @@
 <div class="uk-margin-top">
     <p class="uk-h4 uk-text-center uk-text-primary">Lista de Preguntas</p>
 </div>
-<button class="uk-button-small uk-button-primary uk-margin-bottom">
-    <span uk-icon="icon:file-text">Nueva pregunta</span>
-</button>
-<div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-center uk-margin-top-remove">
-    <table class="uk-table uk-table-striped uk-table-divider uk-table-middle">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th class="uk-width-1-4">Descripción</th>
-                <th>Categoría</th>
-                <th>Imagenes</th>
-                <th>Opciones</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let question of listQuestions;let i=index;">
-                <td>{{i+1}}</td>
-                <td class="uk-text-justify">{{question.questionDescription}}</td>
-                <td>{{question.category['nameCategory']}}</td>
-                <td>
-                    <button class="uk-button-small uk-button-primary">
-                        <span uk-icon="image"></span>
-                    </button>
-                </td>
-                <td>
-                    <button (click)="showModal(question.options,question.correctOption)" class="uk-button-small uk-button-primary" uk-toggle="target: #modal-close-default">
-                        <span uk-icon="thumbnails"></span>
-                    </button>
-                </td>
-                <td>
-                    <button class="uk-button-small uk-button-default">
-                        <span uk-icon="icon: pencil"></span>
-                    </button>
-                    <button (click)="deleteQuestion(question._id)" class="uk-button-small uk-button-danger">
-                        <span uk-icon="icon: trash"></span>
-                    </button>
-                </td>
-            </tr>
 
-        </tbody>
-    </table>
+<div class="uk-button-group">
+    <a routerLink="/newquestion" class="uk-button uk-button-primary uk-margin-bottom">
+        <span uk-icon="icon:file-text">Nueva pregunta</span>
+    </a>
+    <a (click)="goToTheBeginning()" class="uk-button uk-button-secondary uk-margin-bottom">
+        <span uk-icon="icon:arrow-up">Inicio</span>
+    </a>
+    <a (click)="goToTheEnd()" class="uk-button uk-button-danger uk-margin-bottom">
+        <span uk-icon="icon:arrow-down">Final</span>
+    </a>
+</div>
+<!-- uk-flex uk-flex-center uk-margin-top-remove -->
+<div *ngIf="listQuestions.length!==0 " class="uk-flex-center uk-card uk-card-default uk-card-body uk-margin-top-remove ">
+    <cdk-virtual-scroll-viewport itemSize="5 " style="height: 300px; ">
+
+        <table class="uk-table uk-table-striped uk-table-divider uk-table-middle ">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th class="uk-width-1-4 ">Descripción</th>
+                    <th>Categoría</th>
+                    <th>Imagenes</th>
+                    <th>Opciones</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *cdkVirtualFor="let question of listQuestions;let i=index; ">
+                    <tr style="width: 100%;min-height: 30px; ">
+                        <td>{{i+1}}</td>
+                        <td class="uk-text-justify ">{{question.questionDescription}}</td>
+                        <td>{{question.category['nameCategory']}}</td>
+                        <td>
+                            <button class="uk-button-small uk-button-primary ">
+                                <span uk-icon="icon:image "></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button (click)="showModal(question.options,question.correctOption) " class="uk-button-small uk-button-primary " uk-toggle="target: #modal-close-default ">
+                                <span uk-icon="icon:thumbnails "></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button class="uk-button-small uk-button-default ">
+                                <span uk-icon="icon: pencil "></span>
+                            </button>
+                            <button (click)="deleteQuestion(question._id) " class="uk-button-small uk-button-danger ">
+                                <span uk-icon="icon: trash "></span>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </cdk-virtual-scroll-viewport>
+
+</div>
+<div *ngIf="listQuestions.length===0 && !hasError" class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>No hay ningúna pregunta agregada</p>
+</div>
+
+<div *ngIf="hasError" class="uk-alert-danger uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>{{erroMessage}}</p>
 </div>
 <!-- MODALS -->
-<div id="modal-close-default" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body">
-        <button class="uk-modal-close-default" type="button" uk-close></button>
-        <div class="uk-modal-header">
-            <h2 class="uk-modal-title">Opciones</h2>
+<div id="modal-close-default " uk-modal>
+    <div class="uk-modal-dialog uk-modal-body ">
+        <button class="uk-modal-close-default " type="button " uk-close></button>
+        <div class="uk-modal-header ">
+            <h2 class="uk-modal-title ">Opciones</h2>
         </div>
-        <ol type="A">
-            <li *ngFor="let option of listOptions">{{option}}</li>
+        <ol type="A ">
+            <li *ngFor="let option of listOptions ">{{option}}</li>
         </ol>
-        <div class="uk-modal-footer">
-            <div class="uk-grid-small" uk-grid>
-                <div class="uk-width-expand" uk-leader>Respuesta Correcta</div>
-                <div class="uk-text-success">
+        <div class="uk-modal-footer ">
+            <div class="uk-grid-small " uk-grid>
+                <div class="uk-width-expand " uk-leader>Respuesta Correcta</div>
+                <div class="uk-text-success ">
                     {{correctOption}}
                 </div>
             </div>

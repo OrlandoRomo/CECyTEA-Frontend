@@ -12,6 +12,8 @@ import { ListQuestionsComponent } from './components/list-questions/list-questio
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { ListCategoriesComponent } from './components/list-categories/list-categories.component';
 import { ComponentIndexComponent } from './components/component-index.component';
+import { QuestionComponent } from './components/question/question.component';
+import { CategoryComponent } from './components/category/category.component';
 
 // ReactiveFormsModule
 import {ReactiveFormsModule} from '@angular/forms';
@@ -22,8 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './components/shared/footer/footer.component';
 // Routes
 import { APPROUTING } from './app.routes';
-import { QuestionComponent } from './components/question/question.component';
 
+// Virtual Scroll Angular 7
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 
 
@@ -41,12 +44,14 @@ import { QuestionComponent } from './components/question/question.component';
     ListCategoriesComponent,
     ComponentIndexComponent,
     QuestionComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    APPROUTING
+    APPROUTING,
+    ScrollingModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

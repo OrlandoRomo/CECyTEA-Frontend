@@ -1,28 +1,53 @@
-<div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-center uk-margin-top-remove">
-    <table class="uk-table uk-table-striped uk-table-hover">
-        <thead>
-            <tr>
-                <th>Table Heading</th>
-                <th>Table Heading</th>
-                <th>Table Heading</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Table Data</td>
-                <td>Table Data</td>
-                <td>Table Data</td>
-            </tr>
-            <tr>
-                <td>Table Data</td>
-                <td>Table Data</td>
-                <td>Table Data</td>
-            </tr>
-            <tr>
-                <td>Table Data</td>
-                <td>Table Data</td>
-                <td>Table Data</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="uk-margin-top">
+    <p class="uk-h4 uk-text-center uk-text-primary">Lista de Categorías</p>
+</div>
+
+<div class="uk-button-group">
+    <a routerLink="/newcategory" class="uk-button uk-button-primary uk-margin-bottom">
+        <span uk-icon="icon:thumbnails">Nueva categoría</span>
+    </a>
+    <a (click)="goToTheBeginning()" class="uk-button uk-button-secondary uk-margin-bottom">
+        <span uk-icon="icon:arrow-up">Inicio</span>
+    </a>
+    <a (click)="goToTheEnd()" class="uk-button uk-button-danger uk-margin-bottom">
+        <span uk-icon="icon:arrow-down">Final</span>
+    </a>
+</div>
+<!-- uk-flex uk-flex-center uk-margin-top-remove -->
+<div *ngIf="listCategories.length!==0" class="uk-flex-center uk-card uk-card-default uk-card-body uk-margin-top-remove ">
+    <cdk-virtual-scroll-viewport itemSize="5 " style="height: 300px; ">
+
+        <table class="uk-table uk-table-striped uk-table-divider uk-table-middle ">
+            <thead>
+                <tr>
+                    <th class="uk-table-expand">#</th>
+                    <th class="uk-table-expand">Nombre</th>
+                    <th class="uk-table-large">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *cdkVirtualFor="let category of listCategories;let i=index; ">
+                    <tr style="width: 100%;min-height: 30px; ">
+                        <td>{{i+1}}</td>
+                        <td class="uk-text-justify ">{{category.nameCategory}}</td>
+                        <td>
+                            <button class="uk-button-small uk-button-default ">
+                                <span uk-icon="icon: pencil "></span>
+                            </button>
+                            <button (click)="deleteCategory(category._id) " class="uk-button-small uk-button-danger ">
+                                <span uk-icon="icon: trash "></span>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </cdk-virtual-scroll-viewport>
+</div>
+<div *ngIf="listCategories.length===0 && !hasError" class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>No hay ningúna categoría agregada</p>
+</div>
+
+<div *ngIf="hasError" class="uk-alert-danger uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>{{erroMessage}}</p>
 </div>

@@ -12,6 +12,7 @@ function createWindow(height, width) {
     window.on('closed', function() {
         window = null;
     });
+    window.webContents.openDevTools();
 }
 
 electron.app.on('ready', () => {

@@ -1,0 +1,26 @@
+<div>
+    <div class="uk-margin-top">
+        <p class="uk-h4 uk-text-center uk-text-primary">Nueva Categoría</p>
+    </div>
+    <div class="uk-card uk-card-default uk-card-body
+    uk-flex uk-flex-center uk-margin-top-remove">
+        <form [formGroup]="categoryForm" (ngSubmit)="createNewCategory()" class="uk-margin-remove-top">
+            <div class="uk-margin">
+                <div class="uk-inline">
+                    <input formControlName="nameCategory" class="uk-input uk-form-small uk-form-width-large" type="text" placeholder="Nombre de la categoría">
+                </div>
+                <div *ngIf="categoryForm.get('nameCategory').errors?.required && categoryForm.get('nameCategory').touched">
+                    <span class="uk-label uk-label-danger">La descripción es requerido</span>
+                </div>
+            </div>
+            <button [disabled]="!categoryForm.valid" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Crear</button>
+            <a routerLink="/categories" class="uk-link-muted uk-position-bottom-center uk-text-primary" href="">
+        Regresar a la lista</a>
+        </form>
+    </div>
+    <div *ngIf="hasError" class="uk-alert-danger uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+        <p>{{erroMessage}}</p>
+    </div>
+</div>
+
+<app-footer></app-footer>
