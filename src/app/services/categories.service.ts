@@ -38,7 +38,7 @@ export class CategoriesService {
   private erroHandler(err: HttpErrorResponse): Observable<any> {
     let message: string;
     if (err.status === 0) {
-      message = 'No se pudo conectar con el servidor, intelo más tarde.';
+      message = 'No se pudo conectar con el servidor, inténtelo más tarde.';
     }
     throw message;
   }

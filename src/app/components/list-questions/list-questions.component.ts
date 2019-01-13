@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Question } from 'src/app/interfaces/question';
 import { Router } from '@angular/router';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-
+declare var UIkit:any;
 @Component({
   selector: 'app-list-questions',
   templateUrl: './list-questions.component.html',

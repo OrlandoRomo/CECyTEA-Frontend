@@ -40,7 +40,7 @@
                             </button>
                         </td>
                         <td>
-                            <button (click)="showModal(question.options,question.correctOption) " class="uk-button-small uk-button-primary " uk-toggle="target: #modal-close-default ">
+                            <button uk-toggle="target: #modal-close-default" (click)="showModal(question.options,question.correctOption)" class="uk-button-small uk-button-primary ">
                                 <span uk-icon="icon:thumbnails "></span>
                             </button>
                         </td>
@@ -59,27 +59,27 @@
     </cdk-virtual-scroll-viewport>
 
 </div>
-<div *ngIf="listQuestions.length===0 && !hasError" class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+<div *ngIf="listQuestions.length===0 && !hasError " class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
     <p>No hay ningúna pregunta agregada</p>
 </div>
 
-<div *ngIf="hasError" class="uk-alert-danger uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+<div *ngIf="hasError " class="uk-alert-danger uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
     <p>{{erroMessage}}</p>
 </div>
 <!-- MODALS -->
-<div id="modal-close-default " uk-modal>
-    <div class="uk-modal-dialog uk-modal-body ">
-        <button class="uk-modal-close-default " type="button " uk-close></button>
-        <div class="uk-modal-header ">
-            <h2 class="uk-modal-title ">Opciones</h2>
+<div id='modal-close-default' uk-modal>
+    <div class='uk-modal-dialog uk-modal-body'>
+        <button class='uk-modal-close-default' type='button' uk-close></button>
+        <div class='uk-modal-header'>
+            <h2 class='uk-modal-title'>Opciones</h2>
         </div>
-        <ol type="A ">
-            <li *ngFor="let option of listOptions ">{{option}}</li>
+        <ol type='A'>
+            <li *ngFor='let option of listOptions'>{{option}}</li>
         </ol>
-        <div class="uk-modal-footer ">
-            <div class="uk-grid-small " uk-grid>
-                <div class="uk-width-expand " uk-leader>Respuesta Correcta</div>
-                <div class="uk-text-success ">
+        <div class='uk-modal-footer '>
+            <div class='uk-grid-small' uk-grid>
+                <div class='uk-width-expand' uk-leader>Respuesta Correcta</div>
+                <div class='uk-text-success'>
                     {{correctOption}}
                 </div>
             </div>

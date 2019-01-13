@@ -20,6 +20,9 @@ export class QuestionComponent {
   public files: File[] = [];
   public optionsArray: string[] = [];
   public correctAnswer: string;
+  public numberOfOptions = 0;
+  public hasError = false;
+  public errMessage: string;
   constructor(private _QS: QuestionsService, private router: Router, private _category: CategoriesService, private fb: FormBuilder) {
     if (localStorage.getItem('manager') !== null) {
       this.buildForm();
@@ -31,6 +34,9 @@ export class QuestionComponent {
   buildForm() {
     this._category.getAllCategories().subscribe((categories: any) => {
       this.categories = categories.categoriesDB;
+    }, (error) => {
+      this.errMessage = error;
+      this.hasError = true;
     });
     this.questionForm = this.fb.group({
       questionDescription: new FormControl('', Validators.required),
@@ -38,13 +44,26 @@ export class QuestionComponent {
     });
   }
   createNewQuestion() {
-    this.newQuestion = this.questionForm.value;
-    this._QS.addNewQuestion(this.files, this.newQuestion).then(() => {
-      this.questionForm.reset();
-      this.router.navigate(['/questions']);
-    }).catch((err) => {
-      console.log(err);
-    });
+    if (this.correctAnswer !== undefined) {
+      this.newQuestion = this.questionForm.value;
+      this.newQuestion.options = this.optionsArray;
+      this.newQuestion.correctOption = this.correctAnswer;
+      this._QS.addNewQuestion(this.files, this.newQuestion).then(() => {
+        this.questionForm.reset();
+        this.router.navigate(['/questions']);
+      }).catch((err) => {
+        UIkit.notification({
+          message: `${err}`,
+          status: 'danger', pos: 'top-right', timeout: '1000'
+        });
+      });
+    } else {
+      UIkit.notification({
+        message: `Falta marca la respuesta correcta`,
+        status: 'danger', pos: 'top-right', timeout: '1000'
+      });
+    }
+
   }
   checkExtension(event) {
     this.files = event.target.files;
@@ -52,12 +71,18 @@ export class QuestionComponent {
   addNewOption(newOption: string) {
     this.optionsArray.push(newOption);
     this.optionsInput.nativeElement.value = '';
+    this.numberOfOptions++;
   }
   deleteOption(index: number) {
     this.optionsArray.splice(index, 1);
+    this.numberOfOptions--;
   }
   setCorrectAnswer(option: string) {
     this.correctAnswer = option;
-    UIkit.notification({ message:  `${option} marcada como correcta`, status: 'success', pos: 'top-right', timeout: '500' });
+    UIkit.notification({
+      message: `<span class='uk-text-emphasis'>${option}</span> marcada como correcta`,
+      status: 'primary', pos: 'top-right', timeout: '1000'
+    });
+
   }
 }

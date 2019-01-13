@@ -40,18 +40,21 @@ export class QuestionsService {
       for (let i = 0; i < question.options.length; i++) {
         formData.append('options', question.options[i].toString());
       }
-      console.log(formData.getAll('options'));
       formData.append('manager', this._getToken.getIdManagerLocalStorage());
       formData.append('category', question.category.toString());
       formData.append('correctOption', question.correctOption.toString());
       xhr.onreadystatechange = function () {
+
         if (xhr.readyState === 4) {
+          if (xhr.status === 0) {
+            reject('No se pudo conectar con el servidor, inténtelo más tarde.');
+          }
           if (xhr.status === 200) {
             console.log('Imagen subida');
             resolve(xhr.response);
           } else {
-            console.log('Fallo la subida');
-            reject(xhr.response);
+            console.log();
+            reject('La pregunta ya existe.');
           }
         }
       };
@@ -65,7 +68,7 @@ export class QuestionsService {
     // tslint:disable-next-line:prefer-const
     let message: string;
     if (err.status === 0) {
-      message = 'No se pudo conectar con el servidor, intelo más tarde.';
+      message = 'No se pudo conectar con el servidor, inténtelo más tarde.';
     }
     throw message;
   }
