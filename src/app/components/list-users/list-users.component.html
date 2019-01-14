@@ -1,28 +1,48 @@
-<div class="uk-card uk-card-default uk-card-body uk-flex uk-flex-center uk-margin-top-remove">
-    <table class="uk-table uk-table-striped uk-table-hover">
-        <thead>
-            <tr>
-                <th>Table Heading</th>
-                <th>Table Heading</th>
-                <th>Table Heading</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Table Data</td>
-                <td>Table Data</td>
-                <td>Table Data</td>
-            </tr>
-            <tr>
-                <td>Table Data</td>
-                <td>Table Data</td>
-                <td>Table Data</td>
-            </tr>
-            <tr>
-                <td>Table Data</td>
-                <td>Table Data</td>
-                <td>Table Data</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="uk-margin-top">
+    <p class="uk-h4 uk-text-center uk-text-primary">Lista de Estudiantes</p>
+</div>
+
+<div class="uk-button-group">
+    <a (click)="goToTheBeginning()" class="uk-button uk-button-secondary uk-margin-bottom">
+        <span uk-icon="icon:arrow-up">Inicio</span>
+    </a>
+    <a (click)="goToTheEnd()" class="uk-button uk-button-danger uk-margin-bottom">
+        <span uk-icon="icon:arrow-down">Final</span>
+    </a>
+</div>
+<div *ngIf="listStudents.length!==0" class="uk-flex-center uk-card uk-card-default uk-card-body uk-margin-top-remove ">
+    <cdk-virtual-scroll-viewport itemSize="5 " style="height: 300px; ">
+
+        <table class="uk-table uk-table-striped uk-table-divider uk-table-middle ">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th class="uk-width-1-6">Grado y grupo</th>
+                    <td>Correo</td>
+                    <th>Examenes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *cdkVirtualFor="let student of listStudents;let i=index; ">
+                    <tr style="width: 100%;min-height: 30px; ">
+                        <td>{{i+1}}</td>
+                        <td>{{student.name}}</td>
+                        <td>{{student.lastName}}</td>
+                        <td>{{student.grade }}°{{student.group}}</td>
+                        <td>{{student.email}}</td>
+                        <td>
+                            <button (click)="seeTestsByUser(student._id)" class="uk-button-small uk-button-primary ">Ver Examenes
+                                <span uk-icon="icon: sheet"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </cdk-virtual-scroll-viewport>
+</div>
+<div *ngIf="listStudents.length===0 && !hasError" class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>No hay ningún estudiante registrado</p>
 </div>

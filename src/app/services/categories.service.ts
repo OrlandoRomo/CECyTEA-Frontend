@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { GetTokenService } from './get-token.service';
-import { Question } from '../interfaces/question';
+
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Category } from '../interfaces/category';

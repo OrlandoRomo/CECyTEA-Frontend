@@ -14,6 +14,7 @@ import { ListCategoriesComponent } from './components/list-categories/list-categ
 import { ComponentIndexComponent } from './components/component-index.component';
 import { QuestionComponent } from './components/question/question.component';
 import { CategoryComponent } from './components/category/category.component';
+import { ChartsComponent } from './components/list-users/charts/charts.component';
 
 // ReactiveFormsModule
 import {ReactiveFormsModule} from '@angular/forms';
@@ -45,6 +46,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     ComponentIndexComponent,
     QuestionComponent,
     CategoryComponent,
+    ChartsComponent,
   ],
   imports: [
     BrowserModule,

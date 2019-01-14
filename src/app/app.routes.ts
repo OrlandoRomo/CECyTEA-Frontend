@@ -8,6 +8,7 @@ import { ListCategoriesComponent } from './components/list-categories/list-categ
 import { ComponentIndexComponent } from './components/component-index.component';
 import { QuestionComponent } from './components/question/question.component';
 import { CategoryComponent } from './components/category/category.component';
+import { ChartsComponent } from './components/list-users/charts/charts.component';
 
 const routes: Routes = [
     {
@@ -18,6 +19,7 @@ const routes: Routes = [
             { path: 'users', component: ListUsersComponent },
             { path: 'categories', component: ListCategoriesComponent },
             { path: 'newcategory', component: CategoryComponent },
+            { path: 'charts/:id', component: ChartsComponent },
         ]
     },
     { path: 'home', component: HomeComponent },
