@@ -64,9 +64,23 @@ export class QuestionsService {
       xhr.send(formData);
     });
   }
+
+  updateQuestion(question: Question) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'token': this._getToken.getTokenLocalStorage(),
+      })
+    };
+    return this._http.put(`http://localhost:3000/question/${question._id}`, question, httpOptions).pipe(catchError(this.erroHandler));
+  }
+
   private erroHandler(err: HttpErrorResponse): Observable<any> {
     // tslint:disable-next-line:prefer-const
     let message: string;
+    if (err.status === 400) {
+      message = 'La pregunta ya existe';
+    }
+    console.log(err.status);
     if (err.status === 0) {
       message = 'No se pudo conectar con el servidor, inténtelo más tarde.';
     }

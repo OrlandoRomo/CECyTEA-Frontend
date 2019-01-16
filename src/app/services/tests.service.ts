@@ -18,14 +18,14 @@ export class TestsService {
         'token': this._getToken.getTokenLocalStorage()
       })
     };
-    return this._http.get(`http://localhost:3000/test/${id}`, httpOptions);
+    return this._http.get(`http://localhost:3000/test/${id}`, httpOptions).pipe(catchError(this.erroHandler));
   }
   private erroHandler(err: HttpErrorResponse): Observable<any> {
 
+    let message: string;
     if (err.status === 0) {
-      let message: string;
       message = 'No se pudo conectar con el servidor, inténtelo más tarde.';
-      throw message;
     }
+    throw message;
   }
 }

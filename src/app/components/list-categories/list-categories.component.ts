@@ -4,7 +4,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Category } from '../../interfaces/category';
-
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-list-categories',
   templateUrl: './list-categories.component.html',
@@ -16,16 +16,20 @@ export class ListCategoriesComponent {
   public listCategories: Category[] = [];
   public hasError = false;
   public erroMessage: string;
+  public putCategory: Category = { _id: '', nameCategory: '' };
+  public putCategoryError: Category = { _id: '', nameCategory: '' };
+  public putCategoryForm: FormGroup;
+  public hasErrorModal = false;
+  public erroMessageModal: string;
   constructor(private _CS: CategoriesService, private router: Router) {
     this.getAllCategories();
+    this.buildForm();
   }
   getAllCategories() {
     this._CS.getAllCategories().pipe((map((categories: any) => {
       return categories.categoriesDB;
-      console.log(categories);
     }))).subscribe((categories: any) => {
       this.listCategories = categories;
-      console.log(categories);
     }, error => {
       this.erroMessage = error;
       this.hasError = true;
@@ -37,6 +41,30 @@ export class ListCategoriesComponent {
       window.location.reload();
     }, (err) => {
       console.log(err);
+    });
+  }
+  buildForm() {
+    this.putCategoryForm = new FormGroup({
+      nameCategory: new FormControl('', Validators.required)
+    });
+  }
+  showEditModal(id: String) {
+    this.putCategory = this.listCategories.find((category) => category._id === id);
+    this.putCategoryForm = new FormGroup({
+      nameCategory: new FormControl(this.putCategory.nameCategory, Validators.required)
+    });
+  }
+  updateCategory() {
+    this.putCategoryError = this.putCategoryForm.value;
+    this.putCategoryError._id = this.putCategory._id;
+    console.log(this.putCategoryError);
+    this._CS.updateCategory(this.putCategoryError).subscribe(() => {
+      this.hasErrorModal = false;
+      window.location.reload();
+    }, (err) => {
+      this.erroMessageModal = err;
+      this.hasErrorModal = true;
+      console.log(this.putCategoryError);
     });
   }
   goToTheBeginning() {

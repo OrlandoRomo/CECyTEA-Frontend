@@ -1,3 +1,97 @@
-<p>
-  charts works!
-</p>
+<div class="uk-margin-top">
+    <p class="uk-h4 uk-text-center uk-text-primary">Lista de Tests</p>
+</div>
+<div class="uk-flex uk-flex-center@m">
+    <div class="uk-button-group">
+        <a (click)="returnListUsers()" class="uk-button uk-button-primary uk-margin-bottom">
+            <span uk-icon="icon:arrow-left"></span>Regresar
+        </a>
+        <a (click)="goToTheBeginning()" class="uk-button uk-button-secondary uk-margin-bottom">
+            <span uk-icon="icon:arrow-up">INICIO</span>
+        </a>
+        <a (click)="goToTheEnd()" class="uk-button uk-button-danger uk-margin-bottom">
+            <span uk-icon="icon:arrow-down">FINAL</span>
+        </a>
+    </div>
+    <div class="uk-flex uk-flex-center@m uk-flex-right@l">
+        <button (click)="getAverage()" type="button" class="uk-button uk-button-success uk-margin-bottom" uk-toggle="target: #modal-overflow">
+      <span uk-icon="icon:info">  Promedio</span>
+    </button>
+    </div>
+</div>
+<div *ngIf="listTests.length!==0" class="uk-flex-center uk-card uk-card-default uk-card-body uk-margin-top-remove ">
+    <cdk-virtual-scroll-viewport itemSize="5 " style="height: 300px; ">
+
+        <table class="uk-table uk-table-striped uk-table-divider uk-table-middle ">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Correctas</th>
+                    <th>Incorrectas</th>
+                    <th>Duración</th>
+                    <th>Gráfica</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *cdkVirtualFor="let test of listTests;let i=index; ">
+                    <tr style="width: 100%;min-height: 30px; ">
+                        <td>{{i+1}}</td>
+                        <td>{{test.correctAnswers}}</td>
+                        <td>{{test.incorrectAnswers}}</td>
+                        <td>{{test.timer}}</td>
+                        <td>
+                            <button class="uk-button-small uk-button-primary" (click)="showModal(test._id)" uk-toggle="target: #modal-example">
+                <span uk-icon="icon:settings"></span>
+              </button>
+
+
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </cdk-virtual-scroll-viewport>
+</div>
+<div *ngIf="listTests.length===0 && !hasError" class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>El estudiante no ha ningún test</p>
+</div>
+<div *ngIf="hasError" class="uk-alert-danger uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>{{errMessage}}</p>
+</div>
+<!-- This is the modal -->
+<div id="modal-example" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Resumen</h2>
+        <div style="display: block">
+            <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+        <p class="uk-text-center">Calificación: <span class="uk-label uk-label-success">{{averagePerTest}}</span></p>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cerrar</button>
+        </p>
+    </div>
+</div>
+
+<div id="modal-overflow" uk-modal>
+    <div class="uk-modal-dialog">
+
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">Promedios</h2>
+        </div>
+
+        <div class="uk-modal-body" uk-overflow-auto>
+
+            <div style="display: block" *ngIf="barChartData.length>0">
+                <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+            </div>
+
+        </div>
+        <p class="uk-text-center">Promedio General: <span class="uk-label uk-label-success">{{averageTests}}</span></p>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+        </div>
+
+    </div>
+</div>

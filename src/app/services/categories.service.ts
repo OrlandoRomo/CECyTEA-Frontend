@@ -35,8 +35,19 @@ export class CategoriesService {
     };
     return this._http.post(`http://localhost:3000/category`, category, httpOptions).pipe(catchError(this.erroHandler));
   }
+  updateCategory(category: Category) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'token': this._getToken.getTokenLocalStorage(),
+      })
+    };
+    return this._http.put(`http://localhost:3000/category/${category._id}`, category, httpOptions).pipe(catchError(this.erroHandler));
+  }
   private erroHandler(err: HttpErrorResponse): Observable<any> {
     let message: string;
+    if (err.status === 500) {
+      message = 'La categoría ya existe.';
+    }
     if (err.status === 0) {
       message = 'No se pudo conectar con el servidor, inténtelo más tarde.';
     }

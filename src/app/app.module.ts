@@ -25,9 +25,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './components/shared/footer/footer.component';
 // Routes
 import { APPROUTING } from './app.routes';
-
 // Virtual Scroll Angular 7
 import {ScrollingModule} from '@angular/cdk/scrolling';
+// ChartJS
+import {ChartsModule} from 'ng2-charts';
 
 
 
@@ -53,7 +54,8 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     ReactiveFormsModule,
     HttpClientModule,
     APPROUTING,
-    ScrollingModule
+    ScrollingModule,
+    ChartsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

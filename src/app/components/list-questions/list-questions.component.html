@@ -35,7 +35,7 @@
                         <td class="uk-text-justify ">{{question.questionDescription}}</td>
                         <td>{{question.category['nameCategory']}}</td>
                         <td>
-                            <button class="uk-button-small uk-button-primary ">
+                            <button class="uk-button-small uk-button-primary" (click)="showModalImages(question.imgs)" uk-toggle="target: #modal-images" type="button">
                                 <span uk-icon="icon:image "></span>
                             </button>
                         </td>
@@ -45,7 +45,7 @@
                             </button>
                         </td>
                         <td>
-                            <button class="uk-button-small uk-button-default ">
+                            <button (click)="showModalEdit(question._id)" class="uk-button-small uk-button-default" uk-toggle="target: #edition">
                                 <span uk-icon="icon: pencil "></span>
                             </button>
                             <button (click)="deleteQuestion(question._id) " class="uk-button-small uk-button-danger ">
@@ -85,3 +85,99 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modals por edit -->
+<div id="edition" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <div class="uk-modal-body">
+            <form novalidate="novalidate" [formGroup]="questionForm" (ngSubmit)="updateQuestion()" class="uk-margin-remove-top">
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <textarea formControlName="questionDescription" class="uk-input uk-form-small uk-form-width-large" type="text" style="overflow:auto;resize:none;" placeholder="Descripción de la pregunta"></textarea>
+                    </div>
+                    <div *ngIf="questionForm.get('questionDescription').errors?.required && questionForm.get('questionDescription').touched">
+                        <span class="uk-label uk-label-danger">La descripción es requerido</span>
+                    </div>
+                </div>
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <input #optionsInput [disabled]="numberOfOptions===4" (keyup.enter)="addNewOption(optionsInput.value)" class="uk-input uk-form-small uk-form-width-large" type="text" value="" placeholder="Escribe la opción y de clic en añadir">
+                    </div>
+                    <button type="button" [disabled]="numberOfOptions===4" (click)="addNewOption(optionsInput.value)" class="uk-button-mini uk-button-primary">Añadir</button>
+
+                </div>
+                <div class="uk-margin" *ngIf="optionsArray.length!==0">
+                    <ul class="uk-list uk-list-bullet">
+                        <li *ngFor="let option of optionsArray;let i=index;">{{option}}&nbsp;
+                            <button type="button" (click)="deleteOption(i)" class="uk-button-mini uk-button-danger">
+                                <span uk-icon="icon:trash; ratio:1"></span>
+                            </button>
+                            <button type="button" (click)="setCorrectAnswer(option)" class="uk-button-mini uk-button-primary">
+                                <span uk-icon="icon:check;ratio:1"></span>
+                            </button>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <div uk-form-custom="target: > * > span:first-child">
+                            <select formControlName="category" class="uk-form-width-large">
+                                <option value="">Seleccione una categoría</option>
+                                <option *ngFor="let category of listCategory" [value]="category._id" [selected]="category._id===putQuestion.category['_id']">{{category.nameCategory}}</option>
+                            </select>
+                            <button class="uk-button uk-button-default" type="button" tabindex="-1">
+                                <span></span>
+                                <span uk-icon="icon: chevron-down"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <div *ngIf="questionForm.get('category').errors?.required && questionForm.get('category').touched">
+                        <span class="uk-label uk-label-danger">La categoría es requerido</span>
+                    </div> -->
+                </div>
+                <button [disabled]="!questionForm.valid || numberOfOptions!==4" type="submit" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Crear</button>
+            </form>
+        </div>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancelar</button>
+        </p>
+    </div>
+</div>
+
+<div id='modal-images' uk-modal>
+    <div class='uk-modal-dialog uk-modal-body'>
+        <button class='uk-modal-close-default' type='button' uk-close></button>
+        <div class="uk-position-relative uk-visible-toggle uk-light" *ngIf="listImgs.length>0" tabindex="-1" uk-slideshow>
+
+
+            <ul class="uk-slideshow-items">
+                <li *ngFor="let img of listImgs">
+                    <img [src]="img" alt="" uk-cover>
+                </li>
+            </ul>
+
+
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+
+        </div>
+        <div *ngIf="listImgs.length===0">
+            <div class="uk-child-width-1-2@m uk-flex uk-flex-center" uk-grid uk-lightbox="animation: slide">
+                <div>
+                    <div class="uk-thumbnail uk-thumbnail-medium">
+                        <img src="assets/img/no_image_available.jpeg" class="uk-thumbnail" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="uk-alert-danger uk-text-center" uk-alert>
+                <p>No hay ningún imagen para mostrar.</p>
+            </div>
+        </div>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancelar</button>
+        </p>
+    </div>
+</div>
