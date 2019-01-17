@@ -17,7 +17,7 @@ export class CategoriesService {
         'token': this._getToken.getTokenLocalStorage(),
       })
     };
-    return this._http.get(`http://localhost:3000/category`, httpOptions).pipe(catchError(this.erroHandler));
+    return this._http.get(`https://cecytea-app.herokuapp.com/category`, httpOptions).pipe(catchError(this.erroHandler));
   }
   deleteCategoryById(id: string) {
     const httpOptions = {
@@ -25,7 +25,7 @@ export class CategoriesService {
         'token': this._getToken.getTokenLocalStorage(),
       })
     };
-    return this._http.delete(`http://localhost:3000/category/${id}`, httpOptions).pipe(catchError(this.erroHandler));
+    return this._http.delete(`https://cecytea-app.herokuapp.com/category/${id}`, httpOptions).pipe(catchError(this.erroHandler));
   }
   addNewCategory(category: Category) {
     const httpOptions = {
@@ -33,7 +33,7 @@ export class CategoriesService {
         'token': this._getToken.getTokenLocalStorage(),
       })
     };
-    return this._http.post(`http://localhost:3000/category`, category, httpOptions).pipe(catchError(this.erroHandler));
+    return this._http.post(`https://cecytea-app.herokuapp.com/category`, category, httpOptions).pipe(catchError(this.erroHandler));
   }
   updateCategory(category: Category) {
     const httpOptions = {
@@ -41,7 +41,8 @@ export class CategoriesService {
         'token': this._getToken.getTokenLocalStorage(),
       })
     };
-    return this._http.put(`http://localhost:3000/category/${category._id}`, category, httpOptions).pipe(catchError(this.erroHandler));
+    // tslint:disable-next-line:max-line-length
+    return this._http.put(`https://cecytea-app.herokuapp.com/category/${category._id}`, category, httpOptions).pipe(catchError(this.erroHandler));
   }
   private erroHandler(err: HttpErrorResponse): Observable<any> {
     let message: string;

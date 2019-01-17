@@ -18,7 +18,7 @@ export class TestsService {
         'token': this._getToken.getTokenLocalStorage()
       })
     };
-    return this._http.get(`http://localhost:3000/test/${id}`, httpOptions).pipe(catchError(this.erroHandler));
+    return this._http.get(`https://cecytea-app.herokuapp.com/test/${id}`, httpOptions).pipe(catchError(this.erroHandler));
   }
   private erroHandler(err: HttpErrorResponse): Observable<any> {
 

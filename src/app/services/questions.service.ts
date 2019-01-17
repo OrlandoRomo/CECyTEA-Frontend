@@ -17,7 +17,7 @@ export class QuestionsService {
         'token': this._getToken.getTokenLocalStorage(),
       })
     };
-    return this._http.get('http://localhost:3000/questions', httpOptions).pipe(catchError(this.erroHandler));
+    return this._http.get('https://cecytea-app.herokuapp.com/questions', httpOptions).pipe(catchError(this.erroHandler));
   }
   deleteQuestionById(id: String) {
     const httpOptions = {
@@ -25,7 +25,7 @@ export class QuestionsService {
         'token': this._getToken.getTokenLocalStorage(),
       })
     };
-    return this._http.delete(`http://localhost:3000/question/${id}`, httpOptions);
+    return this._http.delete(`https://cecytea-app.herokuapp.com/question/${id}`, httpOptions);
   }
 
   addNewQuestion(filesImages: File[], question: Question) {
@@ -58,7 +58,7 @@ export class QuestionsService {
           }
         }
       };
-      let url = 'http://localhost:3000/question';
+      let url = 'https://cecytea-app.herokuapp.com/question';
       xhr.open('POST', url, true);
       xhr.setRequestHeader('token', token);
       xhr.send(formData);
@@ -71,7 +71,8 @@ export class QuestionsService {
         'token': this._getToken.getTokenLocalStorage(),
       })
     };
-    return this._http.put(`http://localhost:3000/question/${question._id}`, question, httpOptions).pipe(catchError(this.erroHandler));
+    // tslint:disable-next-line:max-line-length
+    return this._http.put(`https://cecytea-app.herokuapp.com/question/${question._id}`, question, httpOptions).pipe(catchError(this.erroHandler));
   }
 
   private erroHandler(err: HttpErrorResponse): Observable<any> {

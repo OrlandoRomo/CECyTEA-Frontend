@@ -39,8 +39,10 @@ export class LoginComponent {
       localStorage.setItem('manager', JSON.stringify(manager));
       this.router.navigate(['/home']);
     }, (err) => {
+      console.log(err);
+
       this.hasError = true;
-      this.errMessage = err.error.err['message'];
+      this.errMessage = err;
       this.loginForm.reset();
       return;
     });

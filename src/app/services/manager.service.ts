@@ -15,7 +15,7 @@ export class ManagerService {
   constructor(private _http: HttpClient, private _getToken: GetTokenService) { }
 
   createNewManager(manager: Manager) {
-    return this._http.post('http://localhost:3000/manager', manager).pipe(catchError(this.erroHandler));
+    return this._http.post('https://cecytea-app.herokuapp.com/manager', manager).pipe(catchError(this.erroHandler));
   }
   getAllStudents() {
     const httpOptions = {
@@ -23,7 +23,7 @@ export class ManagerService {
         'token': this._getToken.getTokenLocalStorage()
       })
     };
-    return this._http.get('http://localhost:3000/manager/users/all', httpOptions).pipe(catchError(this.erroHandler));
+    return this._http.get('https://cecytea-app.herokuapp.com/manager/users/all', httpOptions).pipe(catchError(this.erroHandler));
   }
   private erroHandler(err: HttpErrorResponse): Observable<any> {
     let message: string;

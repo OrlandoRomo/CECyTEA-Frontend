@@ -69,9 +69,11 @@ export class QuestionComponent {
     this.files = event.target.files;
   }
   addNewOption(newOption: string) {
-    this.optionsArray.push(newOption);
-    this.optionsInput.nativeElement.value = '';
-    this.numberOfOptions++;
+    if (newOption !== '') {
+      this.optionsArray.push(newOption);
+      this.optionsInput.nativeElement.value = '';
+      this.numberOfOptions++;
+    }
   }
   deleteOption(index: number) {
     this.optionsArray.splice(index, 1);
