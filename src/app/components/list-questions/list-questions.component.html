@@ -1,9 +1,9 @@
 <div class="uk-margin-top">
-    <p class="uk-h4 uk-text-center uk-text-primary">Lista de Preguntas</p>
+    <p class="uk-h4 uk-text-center uk-text-primary cecytea-text">Lista de Preguntas</p>
 </div>
 
 <div class="uk-button-group">
-    <a routerLink="/newquestion" class="uk-button uk-button-primary uk-margin-bottom">
+    <a routerLink="/newquestion" class="uk-button uk-button-primary uk-margin-bottom cecytea-button">
         <span uk-icon="icon:file-text">Nueva pregunta</span>
     </a>
     <a (click)="goToTheBeginning()" class="uk-button uk-button-secondary uk-margin-bottom">
@@ -35,12 +35,12 @@
                         <td class="uk-text-justify ">{{question.questionDescription}}</td>
                         <td>{{question.category['nameCategory']}}</td>
                         <td>
-                            <button class="uk-button-small uk-button-primary" (click)="showModalImages(question.imgs)" uk-toggle="target: #modal-images" type="button">
+                            <button class="uk-button-small uk-button-primary cecytea-button" (click)="showModalImages(question.imgs)" uk-toggle="target: #modal-images" type="button">
                                 <span uk-icon="icon:image "></span>
                             </button>
                         </td>
                         <td>
-                            <button uk-toggle="target: #modal-close-default" (click)="showModal(question.options,question.correctOption)" class="uk-button-small uk-button-primary ">
+                            <button uk-toggle="target: #modal-close-default" (click)="showModal(question.options,question.correctOption)" class="uk-button-small uk-button-primary cecytea-button ">
                                 <span uk-icon="icon:thumbnails "></span>
                             </button>
                         </td>
