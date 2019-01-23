@@ -15,6 +15,7 @@ export class CategoryComponent {
   public newCategory: Category;
   public hasError = false;
   public erroMessage: string;
+  isLoading = false;
   constructor(private _CS: CategoriesService, private router: Router) {
     this.buildForm();
   }
@@ -25,11 +26,13 @@ export class CategoryComponent {
   }
   createNewCategory() {
     this.newCategory = this.categoryForm.value;
-
+    this.isLoading = true;
     this._CS.addNewCategory(this.newCategory).subscribe(() => {
+      this.isLoading = false;
       this.categoryForm.reset();
       this.router.navigate(['/categories']);
     }, error => {
+      this.isLoading = false;
       this.categoryForm.reset();
       this.erroMessage = error;
       this.hasError = true;

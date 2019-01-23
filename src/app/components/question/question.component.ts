@@ -23,6 +23,7 @@ export class QuestionComponent {
   public numberOfOptions = 0;
   public hasError = false;
   public errMessage: string;
+  isLoading = false;
   constructor(private _QS: QuestionsService, private router: Router, private _category: CategoriesService, private fb: FormBuilder) {
     if (localStorage.getItem('manager') !== null) {
       this.buildForm();
@@ -32,9 +33,12 @@ export class QuestionComponent {
   }
 
   buildForm() {
+    this.isLoading = true;
     this._category.getAllCategories().subscribe((categories: any) => {
+      this.isLoading = false;
       this.categories = categories.categoriesDB;
     }, (error) => {
+      this.isLoading = false;
       this.errMessage = error;
       this.hasError = true;
     });
@@ -44,20 +48,24 @@ export class QuestionComponent {
     });
   }
   createNewQuestion() {
+    this.isLoading = true;
     if (this.correctAnswer !== undefined) {
       this.newQuestion = this.questionForm.value;
       this.newQuestion.options = this.optionsArray;
       this.newQuestion.correctOption = this.correctAnswer;
       this._QS.addNewQuestion(this.files, this.newQuestion).then(() => {
+        this.isLoading = false;
         this.questionForm.reset();
         this.router.navigate(['/questions']);
       }).catch((err) => {
+        this.isLoading = false;
         UIkit.notification({
           message: `${err}`,
           status: 'danger', pos: 'top-right', timeout: '1000'
         });
       });
     } else {
+      this.isLoading = false;
       UIkit.notification({
         message: `Falta marca la respuesta correcta`,
         status: 'danger', pos: 'top-right', timeout: '1000'

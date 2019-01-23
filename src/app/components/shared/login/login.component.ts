@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styles: []
 })
 export class LoginComponent {
-
+  isLoading = false;
   public loginForm: FormGroup;
   public user: ManagerLogin;
   public hasError = false;
@@ -35,12 +35,14 @@ export class LoginComponent {
   }
   checkManager() {
     this.user = this.loginForm.value;
+    this.isLoading = true;
     this._auth.checkUser(this.user).subscribe((manager: any) => {
+      this.isLoading = false;
       localStorage.setItem('manager', JSON.stringify(manager));
       this.router.navigate(['/home']);
     }, (err) => {
       console.log(err);
-
+      this.isLoading = false;
       this.hasError = true;
       this.errMessage = err;
       this.loginForm.reset();

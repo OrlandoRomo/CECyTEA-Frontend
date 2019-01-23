@@ -21,16 +21,20 @@ export class ListCategoriesComponent {
   public putCategoryForm: FormGroup;
   public hasErrorModal = false;
   public erroMessageModal: string;
+  isLoading = false;
   constructor(private _CS: CategoriesService, private router: Router) {
     this.getAllCategories();
     this.buildForm();
   }
   getAllCategories() {
+    this.isLoading= true;
     this._CS.getAllCategories().pipe((map((categories: any) => {
+      this.isLoading = false;
       return categories.categoriesDB;
     }))).subscribe((categories: any) => {
       this.listCategories = categories;
     }, error => {
+      this.isLoading = false;
       this.erroMessage = error;
       this.hasError = true;
       console.log(this.erroMessage);

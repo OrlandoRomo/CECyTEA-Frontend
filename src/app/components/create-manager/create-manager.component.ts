@@ -14,6 +14,7 @@ export class CreateManagerComponent {
   public manager: Manager;
   public hasError = false;
   public errMessage: String;
+  isLoading = false;
   constructor(private _ms: ManagerService, private router: Router) {
     this.buildForm();
   }
@@ -31,10 +32,13 @@ export class CreateManagerComponent {
   }
   createNewManager() {
     this.manager = this.managerForm.value;
+    this.isLoading = true;
     this._ms.createNewManager(this.manager).subscribe((message) => {
+      this.isLoading = false;
       this.hasError = true;
       setTimeout(() => this.router.navigate(['/login']), 2000);
     }, (error) => {
+      this.isLoading = false;
       this.managerForm.reset();
       this.errMessage = error.error.err.errors.email.message;
       this.hasError = true;

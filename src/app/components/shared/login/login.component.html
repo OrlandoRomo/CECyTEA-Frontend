@@ -29,10 +29,12 @@
                     <span class="uk-label uk-label-danger">Contraseña es requerida</span>
                 </div>
             </div>
-            <button [disabled]="!loginForm.valid" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Iniciar
-                    Sesión</button>
-            <a routerLink="/newmanager" class="uk-link-muted uk-position-bottom-center uk-text-primary" href="">¿Sin cuenta aún? Click aquí para
-                    registrar</a>
+            <button [disabled]="!loginForm.valid" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom cecytea-button">Iniciar
+                Sesión</button>
+            <div uk-spinner="ratio: 1" *ngIf="isLoading"></div>
+            <a routerLink="/newmanager" class="uk-link-muted uk-position-bottom-center uk-text-primary" href="">¿Sin
+                cuenta aún? Click aquí para
+                registrar</a>
         </form>
     </div>
     <div *ngIf="hasError" class="uk-alert-danger uk-card uk-card-default uk-card-body uk-margin-remove-top" uk-alert>

@@ -23,6 +23,9 @@ export class TestsService {
   private erroHandler(err: HttpErrorResponse): Observable<any> {
 
     let message: string;
+    if (err.status === 400) {
+      message = 'El estudiante no ha hecho ningún test.';
+    }
     if (err.status === 0) {
       message = 'No se pudo conectar con el servidor, inténtelo más tarde.';
     }

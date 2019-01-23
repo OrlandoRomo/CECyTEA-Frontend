@@ -11,7 +11,7 @@
     </a>
 </div>
 <div *ngIf="listStudents.length!==0" class="uk-flex-center uk-card uk-card-default uk-card-body uk-margin-top-remove ">
-    <cdk-virtual-scroll-viewport itemSize="5 " style="height: 300px; ">
+    <cdk-virtual-scroll-viewport itemSize="20" style="height: 300px; ">
 
         <table class="uk-table uk-table-striped uk-table-divider uk-table-middle ">
             <thead>
@@ -43,6 +43,7 @@
         </table>
     </cdk-virtual-scroll-viewport>
 </div>
-<div *ngIf="listStudents.length===0 && !hasError" class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+<div uk-spinner="ratio: 1" *ngIf="isLoading" class="uk-position-center"></div>
+<div *ngIf="listStudents.length===0 && !hasError && !isLoading" class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
     <p>No hay ningún estudiante registrado</p>
 </div>

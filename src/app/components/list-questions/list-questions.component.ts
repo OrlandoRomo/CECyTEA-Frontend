@@ -31,19 +31,23 @@ export class ListQuestionsComponent implements OnInit {
   public correctAnswer: string;
   public listImgs: string[] = [];
   public putNewQuestion: Question = { _id: '', questionDescription: '', options: [''], correctOption: '', category: [''] };
+  isLoading = false;
   constructor(private _QS: QuestionsService, private router: Router, private _CS: CategoriesService) {
     this.getQuestions();
     this.buildForm();
   }
 
   getQuestions() {
+    this.isLoading = true;
     this._QS.getAllQuestions().pipe((map((questions: any) => {
       delete questions.questionsDB.manager;
       return questions.questionsDB;
     }))).subscribe((questions) => {
+      this.isLoading = false;
       this.listQuestions = questions;
       console.log(questions);
     }, error => {
+      this.isLoading = false;
       this.erroMessage = error;
       this.hasError = true;
       console.log(this.erroMessage);

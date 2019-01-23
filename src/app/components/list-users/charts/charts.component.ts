@@ -19,7 +19,6 @@ export class ChartsComponent {
   public doughnutChartData: number[] = [0, 0];
   public doughnutChartType: string = 'doughnut';
   public averagePerTest: number;
-
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
@@ -29,14 +28,17 @@ export class ChartsComponent {
   public barChartLegend: boolean = true;
   public barChartData: any[] = [];
   public averageTests: number;
-
+  isLoading = false;
   constructor(private _TS: TestsService, private activatedRoute: ActivatedRoute, private router: Router) {
     this.activatedRoute.params.subscribe(params => this.getTestsById(params['id']));
   }
   getTestsById(id: string) {
+    this.isLoading = true;
     this._TS.getTestsByUserId(id).subscribe((tests) => {
+      this.isLoading = false;
       this.listTests = tests.testsDB;
     }, (err) => {
+      this.isLoading = false;
       this.errMessage = err;
       this.hasError = true;
     });

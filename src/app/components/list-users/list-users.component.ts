@@ -13,13 +13,15 @@ export class ListUsersComponent {
   @ViewChild(CdkVirtualScrollViewport) viewPort: CdkVirtualScrollViewport;
   public listStudents: any[] = [];
   public hasError = false;
+  isLoading = false;
   constructor(private _MS: ManagerService, private router: Router) {
+    this.isLoading = true;
     this._MS.getAllStudents().subscribe((students) => {
+      this.isLoading = false;
       this.listStudents = students.usersDB;
-
     }, err => {
+      this.isLoading = false;
       console.log(err);
-
     });
   }
   goToTheBeginning() {
