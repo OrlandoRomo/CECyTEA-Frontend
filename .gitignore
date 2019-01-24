@@ -41,3 +41,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#Electron app compilied
+/cecytea-frontend-win32-x64
