@@ -15,7 +15,7 @@
 </div>
 <!-- uk-flex uk-flex-center uk-margin-top-remove -->
 <div *ngIf="listQuestions.length!==0 " class="uk-flex-center uk-card uk-card-default uk-card-body uk-margin-top-remove ">
-    <cdk-virtual-scroll-viewport itemSize="20 " style="height: 300px; ">
+    <cdk-virtual-scroll-viewport itemSize="30" style="height: 300px; ">
 
         <table class="uk-table uk-table-striped uk-table-divider uk-table-middle ">
             <thead>
@@ -149,19 +149,18 @@
 <div id='modal-images' uk-modal>
     <div class='uk-modal-dialog uk-modal-body'>
         <button class='uk-modal-close-default' type='button' uk-close></button>
-        <div class="uk-position-relative uk-visible-toggle uk-light" *ngIf="listImgs.length>0" tabindex="-1" uk-slideshow>
-
-
-            <ul class="uk-slideshow-items">
-                <li *ngFor="let img of listImgs">
-                    <img [src]="img" alt="" uk-cover>
-                </li>
-            </ul>
-
-
-            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-
+        <div class="uk-grid-match uk-child-width-expands@s" uk-grid>
+            <div>
+                <div class="uk-position-relative uk-visible-toggle uk-light" *ngIf="listImgs.length>0" tabindex="-1" uk-slideshow>
+                    <ul class="uk-slideshow-items" *ngFor="let img of listImgs">
+                        <li>
+                            <img [src]="img" alt="">
+                        </li>
+                    </ul>
+                    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                </div>
+            </div>
         </div>
         <div *ngIf="listImgs.length===0">
             <div class="uk-child-width-1-2@m uk-flex uk-flex-center" uk-grid uk-lightbox="animation: slide">

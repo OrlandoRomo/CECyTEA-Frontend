@@ -8,16 +8,19 @@ function createWindow(height, width) {
         backgroundColor: '#ffffff',
         icon: 'file://${__dirname}/dist/cecytea-frontend/assets/logo.png'
     });
-    window.loadURL(`file://${__dirname}/dist//cecytea-frontend/index.html`);
+    window.loadURL(`file://${__dirname}/dist/cecytea-frontend/index.html`);
+    window.show();
     window.on('closed', function() {
         window = null;
     });
-    window.webContents.openDevTools();
+
+    //window.webContents.openDevTools();
 }
 
 electron.app.on('ready', () => {
     const { height, width } = electron.screen.getPrimaryDisplay().workAreaSize;
     createWindow(height, width);
+    window
 });
 
 electron.app.on('window-all-closed', () => {

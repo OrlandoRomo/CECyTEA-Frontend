@@ -1,0 +1,49 @@
+<div class="uk-margin-top">
+    <p class="uk-h4 uk-text-center uk-text-primary cecytea-text">Lista de Estudiantes</p>
+</div>
+
+<div class="uk-button-group">
+    <a (click)="goToTheBeginning()" class="uk-button uk-button-secondary uk-margin-bottom">
+        <span uk-icon="icon:arrow-up">INICIO</span>
+    </a>
+    <a (click)="goToTheEnd()" class="uk-button uk-button-danger uk-margin-bottom">
+        <span uk-icon="icon:arrow-down">FINAL</span>
+    </a>
+</div>
+<div *ngIf="listStudents.length!==0" class="uk-flex-center uk-card uk-card-default uk-card-body uk-margin-top-remove ">
+    <cdk-virtual-scroll-viewport itemSize="20" style="height: 300px; ">
+
+        <table class="uk-table uk-table-striped uk-table-divider uk-table-middle ">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th class="uk-width-1-6">Grado y grupo</th>
+                    <th>Correo</th>
+                    <th>Examenes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *cdkVirtualFor="let student of listStudents;let i=index; ">
+                    <tr style="width: 100%;min-height: 30px; ">
+                        <td>{{i+1}}</td>
+                        <td>{{student.name}}</td>
+                        <td>{{student.lastName}}</td>
+                        <td>{{student.grade }}°{{student.group}}</td>
+                        <td>{{student.email}}</td>
+                        <td>
+                            <button (click)="seeTestsByUser(student._id)" class="uk-button-small uk-button-primary cecytea-button">Ver tests
+                                <span uk-icon="icon: list"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </cdk-virtual-scroll-viewport>
+</div>
+<div uk-spinner="ratio: 1" *ngIf="isLoading" class="uk-position-center"></div>
+<div *ngIf="listStudents.length===0 && !hasError && !isLoading" class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>No hay ningún estudiante registrado</p>
+</div>

@@ -1,0 +1,78 @@
+<div class="uk-margin-top">
+    <p class="uk-h4 uk-text-center uk-text-primary cecytea-text">Lista de Categorías</p>
+</div>
+
+<div class="uk-button-group">
+    <a routerLink="/newcategory" class="uk-button uk-button-primary uk-margin-bottom cecytea-button">
+        <span uk-icon="icon:thumbnails">Nueva categoría</span>
+    </a>
+    <a (click)="goToTheBeginning()" class="uk-button uk-button-secondary uk-margin-bottom">
+        <span uk-icon="icon:arrow-up">Inicio</span>
+    </a>
+    <a (click)="goToTheEnd()" class="uk-button uk-button-danger uk-margin-bottom">
+        <span uk-icon="icon:arrow-down">Final</span>
+    </a>
+</div>
+<!-- uk-flex uk-flex-center uk-margin-top-remove -->
+<div *ngIf="listCategories.length!==0" class="uk-flex-center uk-card uk-card-default uk-card-body uk-margin-top-remove ">
+    <cdk-virtual-scroll-viewport itemSize="20" style="height: 300px; ">
+
+        <table class="uk-table uk-table-striped uk-table-divider uk-table-middle ">
+            <thead>
+                <tr>
+                    <th class="uk-table-expand">#</th>
+                    <th class="uk-table-expand">Nombre</th>
+                    <th class="uk-table-large">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *cdkVirtualFor="let category of listCategories;let i=index; ">
+                    <tr style="width: 100%;min-height: 30px; ">
+                        <td>{{i+1}}</td>
+                        <td class="uk-text-justify ">{{category.nameCategory}}</td>
+                        <td>
+                            <button class="uk-button-small uk-button-default" type="button" (click)="showEditModal(category._id)" uk-toggle="target: #modal-example">
+                                <span uk-icon="icon: pencil "></span>
+                            </button>
+                            <button (click)="deleteCategory(category._id)" type="button" class="uk-button-small uk-button-danger ">
+                                <span uk-icon="icon: trash "></span>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </cdk-virtual-scroll-viewport>
+</div>
+<div uk-spinner="ratio: 1" *ngIf="isLoading" class="uk-position-center"></div>
+<div *ngIf="listCategories.length===0 && !hasError && !isLoading" class="uk-alert-warning uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>No hay ningúna categoría agregada</p>
+</div>
+
+<div *ngIf="hasError" class="uk-alert-danger uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+    <p>{{erroMessage}}</p>
+</div>
+<div id="modal-example" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Headline</h2>
+        <div class="uk-modal-body">
+            <form [formGroup]="putCategoryForm" (ngSubmit)="updateCategory()" class="uk-margin-remove-top">
+                <div class="uk-margin">
+                    <div class="uk-inline">
+                        <input formControlName="nameCategory" [value]="putCategoryForm.get('nameCategory').value" class="uk-input uk-form-small uk-form-width-large" type="text" placeholder="Nombre de la categoría">
+                    </div>
+                    <div *ngIf="putCategoryForm.get('nameCategory').errors?.required && putCategoryForm.get('nameCategory').touched">
+                        <span class="uk-label uk-label-danger">La descripción es requerido</span>
+                    </div>
+                </div>
+                <button [disabled]="!putCategoryForm.valid" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom cecytea-button">Crear</button>
+            </form>
+            <div *ngIf="hasErrorModal" class="uk-alert-danger uk-text-center uk-card uk-card-default uk-card-body uk-margin-remove-top " uk-alert>
+                <p>{{erroMessageModal}}</p>
+            </div>
+        </div>
+        <p class="uk-text-right">
+            <button (click)="hasErrorModal=false" class="uk-button uk-button-default uk-modal-close" type="button">Cancelar</button>
+        </p>
+    </div>
+</div>
