@@ -44,3 +44,5 @@ Thumbs.db
 
 #Electron app compilied
 /cecytea-frontend-win32-x64
+
+package-lock.json
